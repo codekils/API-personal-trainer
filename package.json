@@ -1,0 +1,20 @@
+{
+  "name": "api-personal-trainer",
+  "version": "1.0.0",
+  "description": "apiRESTful Personal Agender",
+  "homepage": "https://github.com/codekils/API-personal-trainer#readme",
+  "bugs": {
+    "url": "https://github.com/codekils/API-personal-trainer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codekils/API-personal-trainer.git"
+  },
+  "license": "MIT",
+  "author": "José Fernandes Santos Lima",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
