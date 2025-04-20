@@ -1,17 +1,17 @@
 
 const clientSchema = require("../schema/registerClientSc");
 
-
-
-async function register(req, res, next) {
+async function validateRegister(req, res, next) {
     const { error } = await clientSchema.validate(req.body, { abortEarly: false });
 
     if (error) {
-        return res.status(400).json({message: "Erro na validação"});
-    }
+        // const mensagens = error.details.map((detail) => detail.message);
+        return res.status(400).json({ erros: error.details[0].message });
+      }
+      
     next();
 };
 
 module.exports = {
-    register
+    validateRegister
 }
