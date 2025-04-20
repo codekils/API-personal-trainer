@@ -1,7 +1,7 @@
 const epxress = require("express");
 const route = epxress.Router();
 
-const { register } = require("../middleware/validateRegister");
+const { validateRegister } = require("../middleware/validateRegister");
 
 // Import Routers
 const { 
@@ -9,6 +9,6 @@ const {
  } = require("../controller/clientes");
 
  // Router Register Client
-route.post("/clientes",  register,registerClient);
+route.post("/clientes",  validateRegister,registerClient);
 
 module.exports = route;
