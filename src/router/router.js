@@ -1,23 +1,19 @@
 const epxress = require("express");
-const route = epxress.Router();
+const router = epxress.Router();
 
-const { validateRegister } = require("../middleware/validateRegister");
 const validatorToken = require("../middleware/validatorToken");
 
-// Import Routers
-const login = require("../controller/login");
-const { agendaRegister } = require("../controller/agendamentos");
-const { 
-    registerClient,
-    listAgenda
-} = require("../controller/clientes");
+const login = require("./login");
+const agendmaentos = require("./agendamentos");
+const registerClient = require("./clientes");
 
-// Login ADMIN 
-route.post("/login", login)
-route.use(validatorToken);
+
+router.use(login);
+router.use(validatorToken);
+router.use(agendmaentos);
+router.use(registerClient);
+
 // Router Register Client
-route.get("/agendamentos", listAgenda);
-route.post("/agendamentos", agendaRegister);
-route.post("/clientes",  validateRegister,registerClient);
 
-module.exports = route;
+
+module.exports = router;
