@@ -17,8 +17,30 @@ const agendaRegister = async (req, res,) => {
     return res.status(201).json({ dataRegister });
 };
 
+const listAgenda = async (req, res) => {
+    try {
+        const data = await db("agendamentos").select("*");
+        
+        const dataFormated = data.map( agendamento => {
+            const dataN = agendamento.data.toISOString().split("T")[0];
+            return {
+                 id: agendamento.id,
+                 cliente_id: agendamento.cliente_id,
+                 data: dataN,
+                 hora_inicio: agendamento.hora_inicio,
+                 hora_fim: agendamento.hora_fim
+            }
+        });
+        console.log(data);
+        
+        res.status(200).json({ dataFormated });
+    } catch (error) {
+        return res.status(400).json({ message: error });
+    };
+};
 module.exports = {
-    agendaRegister
+    agendaRegister,
+    listAgenda
 }
 
 
