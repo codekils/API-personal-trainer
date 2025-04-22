@@ -25,13 +25,6 @@ const registerClient = async (req, res) => {
     }
 };
 
-// const updateClient = async (req, res) => {
-//     const { } = req.params, { } = req.params;
-
-//     const dataUpdate = await db("agendamentos")
-
-// };
-
 // Agendamentos
 const listAgenda = async (req, res) => {
     try {
