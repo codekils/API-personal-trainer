@@ -1,5 +1,6 @@
 const db = require('../connection/db_connection');
 
+// Cadastro de clientes
 const registerClient = async (req, res) => {
     const { nome, telefone, email, objetivo, endereço } = req.body;
 
@@ -24,6 +25,24 @@ const registerClient = async (req, res) => {
     }
 };
 
+// const updateClient = async (req, res) => {
+//     const { } = req.params, { } = req.params;
+
+//     const dataUpdate = await db("agendamentos")
+
+// };
+
+// Agendamentos
+const listAgenda = async (req, res) => {
+    try {
+        const data = await db("agendamentos").select("*");
+        res.status(200).json({ Agenda: data });
+    } catch (error) {
+        return res.status(400).json({ message: error });
+    };
+};
+
 module.exports = {
-    registerClient
+    registerClient,
+    listAgenda
 };
