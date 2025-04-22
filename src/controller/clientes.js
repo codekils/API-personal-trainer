@@ -25,17 +25,6 @@ const registerClient = async (req, res) => {
     }
 };
 
-// Agendamentos
-const listAgenda = async (req, res) => {
-    try {
-        const data = await db("agendamentos").select("*");
-        res.status(200).json({ Agenda: data });
-    } catch (error) {
-        return res.status(400).json({ message: error });
-    };
-};
 
-module.exports = {
-    registerClient,
-    listAgenda
-};
+
+module.exports = registerClient;
