@@ -38,9 +38,16 @@ const listAgenda = async (req, res) => {
         return res.status(400).json({ message: error });
     };
 };
+
+const listAgendaDay = async (req, res) => {
+    const data = "2025-04-30"; 
+    console.log(dados);
+};
+
 module.exports = {
     agendaRegister,
+    listAgendaDay,
     listAgenda
-}
+};
 
 
