@@ -15,4 +15,5 @@ CREATE TABLE agendamentos (
   data DATE NOT NULL,
   hora_inicio TIME NOT NULL,
   hora_fim TIME NOT NULL
+  observacoes VARCHAR(510)
 );
