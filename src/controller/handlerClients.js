@@ -24,7 +24,7 @@ const registerClient = async (req, res) => {
         return res.status(400).json({ message: error })
     }
 };
-
+// Deletar cliente pelo id
 const deleteClient = async (req, res) => {
     const { id } = req.query;
     console.log(id);
