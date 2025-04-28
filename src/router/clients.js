@@ -6,7 +6,7 @@ const { validateRegister } = require("../middleware/validateRegister");
 const {
     registerClient,
     deleteClient
-} = require("../controller/HandlerClient");
+} = require("../controller/handlerClients");
 // Validação de Cliente existente
 const validateEmailPhone = require("../middleware/validateUser");
 // Endpoints
