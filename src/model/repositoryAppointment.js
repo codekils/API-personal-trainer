@@ -2,19 +2,21 @@ const db = require("../connection/db_connection");
 
 class appointmentRepository {
     async update(id, dataToUpdate) {
-        try {
+        try {            
             const updateAppointment = await db("agendamentos")
             .where({ id })
-            .update({ dataToUpdate })
+            .update(dataToUpdate)
             .returning("*");
             return updateAppointment;
         } catch (error) {
             console.error("Erro ao atualizar agendamento no repositório:", error);
             throw error;
-            
         };
-    }
+    };
 
+    async register(dataToUpdate) {
+
+    };
     
     async getById(id) {
         try {
@@ -23,10 +25,8 @@ class appointmentRepository {
         } catch (error) {
             console.error("Erro ao buscar agendamento por ID no repositório:", error);
             throw error;
-        }
-    }
+        };
+    };
 };
 
-module.exports = {
-    appointmentRepository
-};
+module.exports = new appointmentRepository;
