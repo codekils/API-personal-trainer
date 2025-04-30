@@ -1,28 +1,17 @@
 const db = require("../connection/db_connection");
-const updateAppointmentService = require("../services/appointmentServices.js");
+const {
+    updateAppointmentService,
+    registerAppointmentService
+} = require("../services/appointmentServices.js");
 
-const registerAppointment = async (req, res,) => {
-    const { cliente_id, data, hora_inicio, hora_fim, observacoes } = req.body;
-
-    const seachClient = await db("clientes").where({ id: cliente_id }).first();
-
-    if (!seachClient) {
-        return res.status(400).json({ message: "Cliente informado não existe!" });
+const registerAppointment = async (req, res) => {
+    try {
+        const data = await registerAppointmentService(req);
+        return res.status(201).json({ message: "Agendamento criado com sucesso!", data });
+    } catch (error) {
+        console.error("Erro no servidor");
+        return res.status(error.statusCode || 500).json({ error: error.message });
     };
-
-    const registerDbappointment = await db("agendamentos").insert({
-        cliente_id,
-        data,
-        hora_inicio,
-        hora_fim,
-        observacoes
-    }).returning("*");
-
-    if (!registerDbappointment) {
-        return res.status(400).json({ message: "Cliente informado não existe!" });
-    };
-
-    return res.status(201).json({ message: registerDbappointment });
 };
 
 const allAppointment = async (req, res) => {
@@ -57,7 +46,7 @@ const editAppointment = async (req, res) => {
 
         console.error("Erro ao editar agendamento no Controller:", error);
         res.status(error.statusCode || 500).json({ error: error.message || "Error interno do servidor! " });
-        
+
     };
 
 };
