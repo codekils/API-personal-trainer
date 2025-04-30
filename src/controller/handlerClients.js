@@ -1,25 +1,13 @@
 const db = require('../connection/db_connection');
+const clientRepository = require("../model/repositoryClient");
 
 // Cadastro de clientes
 const registerClient = async (req, res) => {
-    const { nome, telefone, email, objetivo, endereço } = req.body;
+    const clientData = req.body;
 
     try {
-
-        const data = await db("clientes").insert({
-            nome,
-            telefone,
-            email,
-            objetivo,
-            endereço
-        }).returning("*");
-
-        if (!data) {
-            return res.status(401).json({message: "Ocorreu um erro"});
-        }
-
-        return res.status(201).json({ message: "register client sucesso!" })
-
+        const dataClient = await clientRepository.insert(clientData);
+        return res.status(201).json({ message: "register client sucesso!", dataClient });
     } catch (error) {
         return res.status(400).json({ message: error })
     }
@@ -46,8 +34,6 @@ const deleteClient = async (req, res) => {
 
 
 };
-
-
 
 module.exports = {
     registerClient,
