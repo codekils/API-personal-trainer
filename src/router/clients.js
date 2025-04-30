@@ -7,10 +7,8 @@ const {
     registerClient,
     deleteClient
 } = require("../controller/handlerClients");
-// Validação de Cliente existente
-const validateEmailPhone = require("../middleware/validateUser");
 // Endpoints
-router.post("/client",  validateEmailPhone,validateRegister,registerClient);
+router.post("/client", validateRegister,registerClient);
 router.delete("/client", deleteClient);
 
 module.exports = router;
