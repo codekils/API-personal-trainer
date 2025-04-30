@@ -1,4 +1,5 @@
 const db = require("../connection/db_connection");
+const appointmentRepository = require("../model/repositoryAppointment");
 
 const registerAppointment = async (req, res,) => {
     const { cliente_id, data, hora_inicio, hora_fim, observacoes } = req.body;
@@ -46,25 +47,17 @@ const allAppointment = async (req, res) => {
     };
 };
 
-const editAppointment = async (req, res) => {;
-    const { id } = req.query;
-    const { data, hora_inicio, hora_fim, observacoes } = req.body;
-    console.log(id);
-    console.log({data, hora_inicio, hora_fim, observacoes});
-        
+const editAppointment = async (req, res) => {        
     try {
+        const appointmentId = parseInt(req.query.id);
+        const updateData = req.body;
+
+        const updateAppointment = await appointmentRepository.updateAppointment(updateData,appointmentId);
         
-        const dados = await db("agendamentos").where({id}).update({
-            data, hora_inicio, hora_fim, observacoes
-        }).returning("*");
-    
-        console.log(dados);
-        
-    
-        return res.status(200).json({ message: dados });
+        return res.status(200).json({ updateAppointment });
     } catch (error) {
-      console.log(error);
-        
+      console.error("Erro ao editar agendamento no Controller:", error);
+      res.status(error.statusCode || 500).json({ error: error.message || "Error interno do servidor! "});        
     };
 
 };
@@ -74,7 +67,6 @@ const getAppointmentsByDate = async (req, res) => {
         
     try {
         const appointmentByDate = await db("agendamentos").where({ data });
-        console.log(appointmentByDate);
         
         if (!appointmentByDate || appointmentByDate == null) {
             return res.status(200).json({ message: `Não existe agendamento para ${data}`});    
