@@ -24,10 +24,10 @@ class appointmentRepository {
             throw error;
         };
     };
-// Busca cliente pelo id do cliente
+    // Busca cliente pelo id do cliente
     async getByIdClient(cliente_id) {
         try {
-            const client = await db("clientes").where({id:cliente_id}).first();
+            const client = await db("clientes").where({ id: cliente_id }).first();
             return client
         } catch (error) {
             console.error("Erro ao buscar cliente por ID no repositório", error.message)
@@ -41,6 +41,16 @@ class appointmentRepository {
             return insertAppointment;
         } catch (error) {
             console.error("Erro ao registrar agendamento!", error.message);
+            throw error;
+        };
+    };
+    // Busca todos os agendamentos
+    async getAllAppointment() {
+        try {
+            const data = await db("agendamentos").select("*");
+            return data;
+        } catch (error) {
+            console.error("Erro ao buscar todos os agendamentos!", error.message);
             throw error;
         };
     };
