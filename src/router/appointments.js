@@ -4,13 +4,13 @@ const router = epxress.Router();
 const { 
     registerAppointment,
     editAppointment,
-    allAppointment,
+    getAllAppointment,
     getAppointmentsByDate
  } = require("../controller/handlerAppointments");
 
 
 // Router Agendamentos
-router.get("/appointments", allAppointment);
+router.get("/appointments", getAllAppointment);
 router.get("/appointments/data", getAppointmentsByDate);
 router.patch("/appointments", editAppointment);
 router.post("/appointments", registerAppointment);

@@ -14,7 +14,7 @@ class appointmentRepository {
             throw error;
         };
     };
-    // Busca agendamento pelo id do agendamento
+    // Buscar agendamento pelo id do agendamento
     async getById(id) {
         try {
             const appointment = await db("agendamentos").where({ id }).first();
@@ -24,7 +24,7 @@ class appointmentRepository {
             throw error;
         };
     };
-    // Busca cliente pelo id do cliente
+    // Buscar cliente pelo id do cliente
     async getByIdClient(cliente_id) {
         try {
             const client = await db("clientes").where({ id: cliente_id }).first();
@@ -34,7 +34,7 @@ class appointmentRepository {
             throw error;
         };
     };
-    // Registra um agendamento
+    // Registrar um agendamento
     async registerAppointment(dataToUpdate) {
         try {
             const insertAppointment = await db("agendamentos").insert(dataToUpdate).returning("*");
@@ -44,18 +44,26 @@ class appointmentRepository {
             throw error;
         };
     };
-    // Busca todos os agendamentos
+    // Buscar todos os agendamentos
     async getAllAppointment() {
         try {
-            const data = await db("agendamentos").select("*");
-            return data;
+            const dateAppoinment = await db("agendamentos").select("*");          
+            return dateAppoinment;
         } catch (error) {
             console.error("Erro ao buscar todos os agendamentos!", error.message);
             throw error;
         };
     };
-
-
+    // Buscar todos os agendamentos pela data
+    async getAppointmentByDate(data) {
+        try {
+            const appointmentByDate = await db("agendamentos").where({ data });
+            return appointmentByDate;
+        } catch (error) {
+            console.error("Erro ao buscar todos os agendamentos pela data", error.message);
+            throw error;
+        };
+    };
 };
 
 module.exports = new appointmentRepository;
