@@ -1,15 +1,18 @@
 const db = require('../connection/db_connection');
-const { newRegisterClient } = require("../services/clientService");
+const { registerClientService } = require("../services/clientService");
 
 // Cadastro de clientes
 const registerClient = async (req, res) => {
 
   try {
-    const registedClientData = await newRegisterClient(req);
+    
+    const registedClientData = await registerClientService(req);
     return res.status(201).json({ message: "Cliente registrado com sucesso!", registedClientData });
 
   } catch (error) {
-    return res.status(400).json({ message: error })
+    console.error("Usuário ou dados informados já existem");
+    return res.status(error.statusCode || 500).json({ error: error.message })
+
   };
 };
 // Deletar cliente pelo id
