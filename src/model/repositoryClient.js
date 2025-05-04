@@ -7,7 +7,7 @@ class ClientRepository {
 
             const registedClientData = await db("clientes").insert(newClientData).returning("*");
             return registedClientData;
-            
+
         } catch (error) {
             console.error("Erro ao inserir cliente no repositório:", error.message);
         };
@@ -33,6 +33,17 @@ class ClientRepository {
             throw error;
         }
     }
+
+    async deleteClient(id) {
+        try {
+
+            const deletedClient = await db("clientes").where({ id }).delete();
+            return deletedClient;
+            
+        } catch (error) {
+            console.error("Erro ao deletar o cliente do banco de dados!", error.message);
+        };
+    };
 }
 
 module.exports = new ClientRepository;
