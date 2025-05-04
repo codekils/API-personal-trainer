@@ -68,16 +68,16 @@ async function registerAppointmentService(req) {
 
 };
 
-async function getAllAppointmentService(req) {
+async function getAllAppointmentService() {
     try {
-        const getAllappointment = await appointmentRepository.getAllAppointment();
-        
+        const getAllappointment = await appointmentRepository.getAllAppointments();
+
         if (getAllappointment === undefined || !getAllappointment) {
             const error = new Error("Erro ao buscar todos os agendamentos!");
             error.statusCode = 400;
             throw error;
         };
-        
+
         return getAllappointment;
 
     } catch (error) {
@@ -88,22 +88,29 @@ async function getAllAppointmentService(req) {
     };
 };
 
-async function dateAppoinmentService(req) {
+async function dateAppointmentService(req) {
     try {
-        const data = req.params.data;
-        const dateAppoinment = appointmentRepository.getAppointmentByDate(data);
+        const data = req.query.data;
+        
+        if (!data) {
+            const error = Error("Informe uma data válida!");
+            error.statusCode = 400;
+            throw error;
+        };
+        
+        const dateAppoinment = await appointmentRepository.getAppointmentByDate(data);
 
-        if (dateAppoinment === undefined || !dateAppoinment) {
-            const error = Error("Erro ao buscar agendamento pela data!");
+        if (dateAppoinment === undefined || !dateAppoinment || dateAppoinment.length === 0) {
+            const error = Error("Nenhum agendamento encontrado para data!");
             error.statusCode = 404;
-            throw error;    
+            throw error;
         };
 
         return dateAppoinment;
-        
+
     } catch (error) {
-      console.error("Erro ao buscar agendamento pela data!", error.message);  
-      throw error;
+        console.error("Erro ao buscar agendamento pela data!", error.message);
+        throw error;
     };
 
 };
@@ -112,5 +119,5 @@ module.exports = {
     updateAppointmentService,
     registerAppointmentService,
     getAllAppointmentService,
-    dateAppoinmentService,
+    dateAppointmentService,
 };

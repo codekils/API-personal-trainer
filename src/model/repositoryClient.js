@@ -1,22 +1,20 @@
 const db = require("../connection/db_connection");
 
 class clientRepository {
-    async insert(dataToInsert) {
+
+    async insert(newClientData) {
         try {
-            const insertClient = await db("clientes").insert(dataToInsert).returning("*");
-            return insertClient;
+            const registedClientData = await db("clientes").insert(newClientData).returning("*");
+            return registedClientData;
         } catch (error) {
             console.error("Erro ao inserir cliente no repositório:", error);
-        }
+        };
     };
 
     async getByEmailPhone(email, phone){
         try {
-            const verifyData = await db("clientes").where({ email }).orWhere({telefone:phone}).first();
-
-            if (verifyData) {
-                return res.status(400).json({message:"Email ou telefone já cadastrado!" });
-            };
+            const foundClient = await db("clientes").where({ email }).orWhere({telefone:phone}).first();
+            return foundClient;
 
         } catch (error) {
             console.error("Erro ao buscar email e telefone no repositório:", error);
