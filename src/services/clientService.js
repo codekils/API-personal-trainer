@@ -27,6 +27,29 @@ async function registerClientService(req) {
     };
 };
 
+async function deleteClientService(req) {
+    try {
+        const id = req.query;
+
+        const foundClient = await ClientRepository.getById(id);
+        console.log(foundClient);
+        
+        if (!foundClient || foundClient.lenght === 0) {
+            const error = new Error("Cliente informado não existe, informe um novo ID!");
+            error.statusCode = 404;
+            throw error;
+        };
+
+        const deletedClientDB = await ClientRepository.deleteClient(id);
+        return deletedClientDB;
+
+    } catch (error) {
+        console.error("Erro ao deletar cliente do banco de dados!", error.message);
+        throw error;
+    };
+};
+
 module.exports = {
     registerClientService,
-}
+    deleteClientService,
+};
