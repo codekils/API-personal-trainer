@@ -1,18 +1,26 @@
-const repositoryClient = require("../model/repositoryClient");
+const ClientRepository = require("../model/repositoryClient");
 
-async function newRegisterClient(req) {
+async function registerClientService(req) {
     try {
         const newClientData = req.body;
 
-        const registedClientData = await repositoryClient.insert(newClientData);
+        const customerExists = await ClientRepository.getByEmailPhone(newClientData.email, newClientData.telefone);
 
-        if (!registedClientData || registedClientData === undefined) {
+        if (customerExists) {
+            const error = new Error("Já existe um cliente com email ou telefone informado!");
+            error.statusCode = 400;
+            throw error;
+        };
+
+        const registeredClientData = await ClientRepository.registerClient(newClientData);
+
+        if (!registeredClientData || registeredClientData === undefined) {
             const error = new Error("Erro ao registrar novo cliente!");
             error.statusCode = 400;
             throw error;
         };
 
-        return registedClientData;
+        return registeredClientData;
     } catch (error) {
         console.error("Ocorreu um erro ao registrar um novo cliente!", error.message);
         throw error;
@@ -20,5 +28,5 @@ async function newRegisterClient(req) {
 };
 
 module.exports = {
-    newRegisterClient,
+    registerClientService,
 }
